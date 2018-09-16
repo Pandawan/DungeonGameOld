@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -9,12 +10,21 @@ namespace Dungeon
     /// </summary>
     public class DungeonGame : Game
     {
-        GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
+        private World world;
 
         public DungeonGame()
         {
             graphics = new GraphicsDeviceManager(this);
+
+            // Vsync/Time: False for variable timestep, true for fixed
+            IsFixedTimeStep = true;
+            graphics.SynchronizeWithVerticalRetrace = true;
+
+            // Allows for borderless full on DesktopGL
+            graphics.HardwareModeSwitch = false;
+
             Content.RootDirectory = "Content";
         }
 
@@ -26,9 +36,14 @@ namespace Dungeon
         /// </summary>
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
-
+            // Create a new world object
+            world = new World();
+            
+            // Call base Initialize stuff like LoadContent
             base.Initialize();
+            
+            // Once the World is Ready and Content has been set
+            world.Init();
         }
 
         /// <summary>
@@ -39,8 +54,9 @@ namespace Dungeon
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
+            
+            // Load the Content
+            world.SetContent(this.Content);
         }
 
         /// <summary>
@@ -62,8 +78,8 @@ namespace Dungeon
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||
                 Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            // TODO: Add your update logic here
+            
+            world.Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -75,8 +91,15 @@ namespace Dungeon
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            
+            // Start drawing to the SpriteBatch
+            spriteBatch.Begin();
 
-            // TODO: Add your drawing code here
+            // Draw every GameObject
+            world.Draw(gameTime, spriteBatch);
+
+            // Stop drawing to the SpriteBatch
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }
