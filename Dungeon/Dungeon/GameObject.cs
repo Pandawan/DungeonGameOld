@@ -14,6 +14,7 @@ namespace Dungeon
 
         // Keep a reference of the Transform component because it is used so often
         private Transform transform;
+
         public Transform Transform
         {
             get

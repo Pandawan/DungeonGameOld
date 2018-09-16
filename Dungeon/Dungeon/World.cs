@@ -10,25 +10,15 @@ namespace Dungeon
     public class World
     {
         public List<GameObject> GameObjects { get; private set; }
-        public ContentManager Content { get; set; }
+
+        // TODO: Move this in separate utils class
+        public static ContentManager Content { get; set; }
+        public static GraphicsDeviceManager Graphics { get; set; }
 
         public World()
         {
             GameObjects = new List<GameObject>();
         }
-
-        #region Getters/Setters
-
-        /// <summary>
-        /// Set the Content to pass to Renderers
-        /// </summary>
-        /// <param name="content"></param>
-        public void SetContent(ContentManager content)
-        {
-            Content = content;
-        }
-
-        #endregion
 
         #region Lifecycle
 
@@ -38,9 +28,10 @@ namespace Dungeon
         public void Init()
         {
             GameObject testObject = CreateGameObject("Test", Vector2.Zero);
-            testObject.AddComponent(new SpriteRenderer(Content, "panda"));
+            testObject.AddComponent(new SpriteRenderer("panda"));
             testObject.Transform.Rotate(180, RotationMode.Degrees);
-            testObject.Transform.Move(Vector2.Divide(testObject.GetComponent<SpriteRenderer>().GetTextureSize(), 2));
+            testObject.Transform.Move(testObject.Transform.GetRelativeCenter());
+            testObject.AddComponent(new Player());
         }
 
         /// <summary>

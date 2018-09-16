@@ -6,6 +6,8 @@ namespace Dungeon.Components
     public class Transform : Component
     {
         public Vector2 Position { get; set; }
+
+        // Always in Radians
         public float Rotation { get; set; }
         public Vector2 Scale { get; set; }
 
@@ -30,6 +32,24 @@ namespace Dungeon.Components
             Scale = scale;
         }
 
+        #region Getters
+
+        /// <summary>
+        /// Get the center position of the texture relative to the texture's (0,0) corner.
+        /// Returns Vector2.Zero if there is no SpriteRenderer
+        /// </summary>
+        /// <returns>Relative Center Position</returns>
+        public Vector2 GetRelativeCenter()
+        {
+            // Texture is dependent on Sprite Renderer, make sure there is one, if not, Vector2.Zero
+            return GameObject.GetComponent<SpriteRenderer>() != null
+                // If there is one, get the Center of the texture with TextureSize / 2
+                ? Vector2.Divide(GameObject.GetComponent<SpriteRenderer>().GetTextureSize(), 2)
+                : Vector2.Zero;
+        }
+
+        #endregion
+
         #region Modifiers
 
         public void Move(Vector2 offset)
@@ -50,12 +70,12 @@ namespace Dungeon.Components
         /// Apply the given angle to the current rotation. (Not from Origin).
         /// </summary>
         /// <param name="angle">The angle to apply</param>
-        /// <param name="mode">Whether the value is in Degrees or Radians</param>
+        /// <param name="mode">Whether the given angle value is in Degrees or Radians. Degrees will be converted to Radians.</param>
         public void Rotate(float angle, RotationMode mode)
         {
             switch (mode)
             {
-                // If Degrees, Convert with Angle * Pi / 180
+                // If angle is in Degrees, convert it to Radians because Rotation is ALWAYS in Radians
                 case RotationMode.Degrees:
                     Rotation += angle * (float) Math.PI / 180;
                     break;

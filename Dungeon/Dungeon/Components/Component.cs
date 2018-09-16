@@ -15,7 +15,7 @@ namespace Dungeon.Components
         {
             GameObject = gameObject;
         }
-        
+
         /// <summary>
         /// Called on creation of the GameObject.
         /// </summary>
@@ -39,7 +39,7 @@ namespace Dungeon.Components
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
         }
-        
+
         public override string ToString()
         {
             return $"Component {GetType()}";

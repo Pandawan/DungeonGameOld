@@ -55,8 +55,9 @@ namespace Dungeon
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
-            // Load the Content
-            world.SetContent(this.Content);
+            // Set Content and Graphics values for internal use
+            World.Content = this.Content;
+            World.Graphics = graphics;
         }
 
         /// <summary>

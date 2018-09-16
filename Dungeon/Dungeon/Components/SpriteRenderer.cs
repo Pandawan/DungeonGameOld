@@ -9,12 +9,10 @@ namespace Dungeon.Components
     {
         public Texture2D Texture { get; set; }
 
-        private ContentManager Content { get; set; }
-
-        public SpriteRenderer(ContentManager content, string textureName)
+        public SpriteRenderer(string textureName)
         {
-            Content = content;
-            Texture = Content.Load<Texture2D>(textureName);
+            // Load the texture from the texture name
+            Texture = World.Content.Load<Texture2D>(textureName);
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
