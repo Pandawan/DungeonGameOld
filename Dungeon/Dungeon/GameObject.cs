@@ -9,41 +9,25 @@ namespace Dungeon
     public class GameObject
     {
         public string Name { get; set; }
-        public Vector2 Position { get; set; }
 
         private List<Component> Components { get; set; }
 
-        public GameObject(string name, Vector2 position)
+        // Keep a reference of the Transform component because it is used so often
+        private Transform transform;
+        public Transform Transform
         {
-            Name = name;
-            Position = position;
-            Components = new List<Component>();
-
-            // Initialize GameObject and its components if it already had some
-            Init();
-        }
-
-        public GameObject(string name, Vector2 position, List<Component> components)
-        {
-            Name = name;
-            Position = position;
-            Components = components;
-
-            // Initialize GameObject and its components if it already had some
-            Init();
-        }
-
-        /// <summary>
-        /// Initialize the GameObject and its Components
-        /// </summary>
-        private void Init()
-        {
-            // Initialize every Component
-            foreach (Component component in Components)
+            get
             {
-                component.Init(this);
-                component.Start();
+                // Get the transform, if it's null find it in Components List, then return
+                return transform ?? (transform = (Transform) Components.Find((component) => component is Transform));
             }
+            set => transform = value;
+        }
+
+        public GameObject(string name)
+        {
+            Name = name;
+            Components = new List<Component>();
         }
 
         /// <summary>
@@ -71,10 +55,12 @@ namespace Dungeon
             }
         }
 
+        #region Component Management
+
         /// <summary>
         /// Add a Component to this GameObject and initialize it
         /// </summary>
-        /// <param name="component"></param>
+        /// <param name="component">The Component to add</param>
         public void AddComponent(Component component)
         {
             Components.Add(component);
@@ -91,6 +77,8 @@ namespace Dungeon
         {
             return (T) Components.Find((component) => component is T);
         }
+
+        #endregion
 
         public override string ToString()
         {

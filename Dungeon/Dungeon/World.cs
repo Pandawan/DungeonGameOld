@@ -29,7 +29,7 @@ namespace Dungeon
         }
 
         #endregion
-        
+
         #region Lifecycle
 
         /// <summary>
@@ -37,9 +37,10 @@ namespace Dungeon
         /// </summary>
         public void Init()
         {
-            GameObject testObject = new GameObject("Test", Vector2.Zero);
+            GameObject testObject = CreateGameObject("Test", Vector2.Zero);
             testObject.AddComponent(new SpriteRenderer(Content, "panda"));
-            GameObjects.Add(testObject);
+            testObject.Transform.Rotate(180, RotationMode.Degrees);
+            testObject.Transform.Move(Vector2.Divide(testObject.GetComponent<SpriteRenderer>().GetTextureSize(), 2));
         }
 
         /// <summary>
@@ -71,7 +72,19 @@ namespace Dungeon
         #endregion
 
         #region GameObject Management
-        
+
+        public GameObject CreateGameObject(string name, Vector2 position)
+        {
+            // Create a GameObject
+            GameObject gameObject = new GameObject(name);
+            // Add a basic Transform
+            gameObject.AddComponent(new Transform(position));
+            // Add it to the list of GameObjects
+            GameObjects.Add(gameObject);
+            // Return it for use
+            return gameObject;
+        }
+
         /// <summary>
         /// Destroy a GameObject and remove from the world
         /// </summary>
