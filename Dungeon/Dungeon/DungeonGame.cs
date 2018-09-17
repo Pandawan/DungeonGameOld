@@ -56,8 +56,8 @@ namespace Dungeon
             spriteBatch = new SpriteBatch(GraphicsDevice);
             
             // Set Content and Graphics values for internal use
-            World.Content = this.Content;
-            World.Graphics = graphics;
+            Utilities.Content = this.Content;
+            Utilities.Graphics = graphics;
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace Dungeon
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            Content.Unload();
         }
 
         /// <summary>
@@ -95,7 +95,7 @@ namespace Dungeon
             GraphicsDevice.Clear(Color.CornflowerBlue);
             
             // Start drawing to the SpriteBatch
-            spriteBatch.Begin();
+            spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
             // Draw every GameObject
             world.Draw(gameTime, spriteBatch);

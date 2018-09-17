@@ -2,10 +2,16 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Dungeon.Components
+namespace Dungeon
 {
+    /// <summary>
+    /// Gives logic and functionality to a GameObject
+    /// </summary>
     public abstract class Component
     {
+        /// <summary>
+        /// The GameObject which contains this Component
+        /// </summary>
         public GameObject GameObject { get; private set; }
 
         /// <summary>

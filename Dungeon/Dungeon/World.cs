@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
-using Dungeon.Components;
-using Dungeon.Components.Player;
+using Dungeon.Player;
+using Dungeon.Rendering;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Dungeon
 {
+    /// <summary>
+    /// Manages all the GameObjects in the Scene
+    /// </summary>
     public class World
     {
+        /// <summary>
+        /// List of all GameObjects in the world
+        /// </summary>
         public List<GameObject> GameObjects { get; private set; }
-
-        // TODO: Move this in separate utils class
-        public static ContentManager Content { get; set; }
-        public static GraphicsDeviceManager Graphics { get; set; }
 
         public World()
         {
@@ -28,11 +29,21 @@ namespace Dungeon
         /// </summary>
         public void Init()
         {
+            // TODO: Move this to another class?
             // Create the player
-            GameObject testObject = CreateGameObject("Player", Vector2.Zero);
-            testObject.AddComponent(new SpriteRenderer("panda"));
-            testObject.Transform.Move(testObject.Transform.GetRelativeCenter());
-            testObject.AddComponent(new PlayerController(5f));
+            GameObject player = CreateGameObject("Player", Vector2.Zero);
+            player.AddComponent(new SpriteRenderer("panda"));
+            player.GetComponent<SpriteRenderer>().SortingLayer = SortingLayer.Player;
+            player.Transform.Move(player.Transform.GetRelativeCenter());
+            player.AddComponent(new PlayerController(5f));
+
+            // Create a tile
+            GameObject tile = CreateGameObject("Tile", Vector2.Zero);
+            tile.AddComponent(new SpriteRenderer("blank", Color.ForestGreen));
+            tile.GetComponent<SpriteRenderer>().SortingLayer = SortingLayer.World;
+            tile.Transform.Scale = new Vector2(100, 10);
+            tile.Transform.Move(tile.Transform.GetRelativeCenter());
+            tile.Transform.Move(new Vector2(100, 250));
         }
 
         /// <summary>

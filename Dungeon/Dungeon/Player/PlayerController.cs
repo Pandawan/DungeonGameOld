@@ -1,10 +1,16 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-namespace Dungeon.Components.Player
+namespace Dungeon.Player
 {
+    /// <summary>
+    /// Controls the Player's Movement, Interactions, etc.
+    /// </summary>
     public class PlayerController : Component
     {
+        /// <summary>
+        /// Speed at which the player should move
+        /// </summary>
         public float Speed { get; set; }
 
         public PlayerController(float speed)

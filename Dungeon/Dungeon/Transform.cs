@@ -1,14 +1,29 @@
 ﻿using System;
+using Dungeon.Rendering;
 using Microsoft.Xna.Framework;
 
-namespace Dungeon.Components
+namespace Dungeon
 {
+    /// <summary>
+    /// Controls a GameObject's Position, Rotation and Scale
+    /// </summary>
     public class Transform : Component
     {
+        /// <summary>
+        /// Position of the GameObject in the world
+        /// </summary>
         public Vector2 Position { get; set; }
 
-        // Always in Radians
+        /// <summary>
+        /// Rotation of the GameObject in the world.
+        /// (Always in radians).
+        /// </summary>
         public float Rotation { get; set; }
+
+        /// <summary>
+        /// Scale of this GameObject.
+        /// (Default is (1, 1)).
+        /// </summary>
         public Vector2 Scale { get; set; }
 
         public Transform(Vector2 position)
@@ -43,8 +58,8 @@ namespace Dungeon.Components
         {
             // Texture is dependent on Sprite Renderer, make sure there is one, if not, Vector2.Zero
             return GameObject.GetComponent<SpriteRenderer>() != null
-                // If there is one, get the Center of the texture with TextureSize / 2
-                ? Vector2.Divide(GameObject.GetComponent<SpriteRenderer>().GetTextureSize(), 2)
+                // If there is one, get the Center of the texture with (TextureSize / 2), then scale it
+                ? Vector2.Divide(GameObject.GetComponent<SpriteRenderer>().GetTextureSize(), 2) * Scale
                 : Vector2.Zero;
         }
 

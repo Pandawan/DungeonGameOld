@@ -2,19 +2,26 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Dungeon.Components;
 
 namespace Dungeon
 {
+    /// <summary>
+    /// An object in the world.
+    /// Can hold Components for behavior/logic.
+    /// </summary>
     public class GameObject
     {
+        /// <summary>
+        /// This GameObject's name
+        /// </summary>
         public string Name { get; set; }
-
-        private List<Component> Components { get; set; }
-
+        
         // Keep a reference of the Transform component because it is used so often
         private Transform transform;
 
+        /// <summary>
+        /// Reference to the Transform Component on this GameObject
+        /// </summary>
         public Transform Transform
         {
             get
@@ -24,6 +31,9 @@ namespace Dungeon
             }
             set => transform = value;
         }
+
+        // List of all components
+        private List<Component> Components { get; set; }
 
         public GameObject(string name)
         {

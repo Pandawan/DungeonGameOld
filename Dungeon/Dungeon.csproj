@@ -57,12 +57,14 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Dungeon\Components\Player\PlayerController.cs" />
-    <Compile Include="Dungeon\Components\SpriteRenderer.cs" />
-    <Compile Include="Dungeon\Components\Transform.cs" />
+    <Compile Include="Dungeon\Player\PlayerController.cs" />
+    <Compile Include="Dungeon\Rendering\SortingLayer.cs" />
+    <Compile Include="Dungeon\Rendering\SpriteRenderer.cs" />
+    <Compile Include="Dungeon\Transform.cs" />
     <Compile Include="Dungeon\DungeonGame.cs" />
     <Compile Include="Dungeon\GameObject.cs" />
-    <Compile Include="Dungeon\Components\Component.cs" />
+    <Compile Include="Dungeon\Component.cs" />
+    <Compile Include="Dungeon\Utilities.cs" />
     <Compile Include="Dungeon\World.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
