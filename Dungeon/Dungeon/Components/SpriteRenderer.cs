@@ -8,11 +8,32 @@ namespace Dungeon.Components
     public class SpriteRenderer : Component
     {
         public Texture2D Texture { get; set; }
+        
+        public Color Color { get; set; }
+        
+        public Vector2 Pivot { get; set; }
+
+        public SpriteEffects Effects { get; set; }
 
         public SpriteRenderer(string textureName)
         {
             // Load the texture from the texture name
             Texture = World.Content.Load<Texture2D>(textureName);
+
+            // Set default values
+            Color = Color.White;
+            Pivot = new Vector2(Texture.Width / 2f, Texture.Height / 2f);
+            Effects = SpriteEffects.None;
+        }
+
+        public SpriteRenderer(string textureName, Color color, Vector2 pivot, SpriteEffects effects)
+        {
+            // Load the texture from the texture name
+            Texture = World.Content.Load<Texture2D>(textureName);
+
+            Color = color;
+            Pivot = pivot;
+            Effects = effects;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -20,13 +41,9 @@ namespace Dungeon.Components
             // Make sure the Texture isn't null
             if (Texture != null)
             {
-                // TODO: If want to add Flipping Option, add SpriteEffects
-                // TODO: Also add a Color option
-                // TODO: Add Custom Pivot Point
-                Vector2 pivotPoint = new Vector2(Texture.Width / 2f, Texture.Height / 2f);
-                spriteBatch.Draw(Texture, GameObject.Transform.Position, Texture.Bounds, Color.White,
-                    GameObject.Transform.Rotation, pivotPoint, GameObject.Transform.Scale,
-                    SpriteEffects.None, 1);
+                spriteBatch.Draw(Texture, GameObject.Transform.Position, Texture.Bounds, Color,
+                    GameObject.Transform.Rotation, Pivot, GameObject.Transform.Scale,
+                    Effects, 1);
             }
         }
 

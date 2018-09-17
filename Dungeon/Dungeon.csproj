@@ -57,7 +57,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Dungeon\Components\Player.cs" />
+    <Compile Include="Dungeon\Components\Player\PlayerController.cs" />
     <Compile Include="Dungeon\Components\SpriteRenderer.cs" />
     <Compile Include="Dungeon\Components\Transform.cs" />
     <Compile Include="Dungeon\DungeonGame.cs" />

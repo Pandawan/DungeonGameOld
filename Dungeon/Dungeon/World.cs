@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Dungeon.Components;
+using Dungeon.Components.Player;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -27,11 +28,11 @@ namespace Dungeon
         /// </summary>
         public void Init()
         {
-            GameObject testObject = CreateGameObject("Test", Vector2.Zero);
+            // Create the player
+            GameObject testObject = CreateGameObject("Player", Vector2.Zero);
             testObject.AddComponent(new SpriteRenderer("panda"));
-            testObject.Transform.Rotate(180, RotationMode.Degrees);
             testObject.Transform.Move(testObject.Transform.GetRelativeCenter());
-            testObject.AddComponent(new Player());
+            testObject.AddComponent(new PlayerController(5f));
         }
 
         /// <summary>
@@ -51,6 +52,7 @@ namespace Dungeon
         /// Draw every GameObject in the world
         /// </summary>
         /// <param name="gameTime">The GameTime object</param>
+        /// <param name="spriteBatch">The spriteBatch object to draw to</param>
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             // Call every GameObject's Draw
